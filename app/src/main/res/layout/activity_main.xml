@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:text="Entrar"
         android:layout_gravity="right"
-        android:id="@+id/btnEntrar"/>
+        android:onClick="validaLogin"/>
 
     <View
         android:layout_width="100dp"
