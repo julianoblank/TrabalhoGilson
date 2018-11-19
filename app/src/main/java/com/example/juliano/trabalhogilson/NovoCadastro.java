@@ -1,5 +1,6 @@
 package com.example.juliano.trabalhogilson;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,8 +41,7 @@ public class NovoCadastro extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                 try {
                     String data = new String(response,"UTF-8");
-                    //usuario.setText(data);
-                    //senha.setText(data);
+                    ClienteouPrestador();
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -53,5 +53,9 @@ public class NovoCadastro extends AppCompatActivity {
             }
         });
 
+    }
+    public void ClienteouPrestador(){
+        Intent novo = new Intent(this, ClienteOuPrestador.class);
+        startActivity(novo);
     }
 }
