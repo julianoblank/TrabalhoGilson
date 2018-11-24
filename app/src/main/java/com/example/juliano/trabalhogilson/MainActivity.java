@@ -32,7 +32,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(novo);
     }
 
-    public void validaLogin(View view){
+    public void novoLogado(View view){
+        Intent novo = new Intent(this, listaPrestador.class);
+        startActivity(novo);
+    }
+
+    public void validaLogin(final View view){
         String url = "http://ghelfer-001-site8.itempurl.com/validaLogin.php";
         RequestParams params = new RequestParams();
         params.add("email",usuario.getText().toString());
@@ -46,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                     String data = new String(response,"UTF-8");
 
                     Toast.makeText(MainActivity.this, "logado", Toast.LENGTH_SHORT).show();
+                    novoLogado(view);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -58,4 +64,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 }
