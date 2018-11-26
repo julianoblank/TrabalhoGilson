@@ -23,8 +23,8 @@ public class listaPrestador extends AppCompatActivity {
     private ListView listView;
     List<Map<String, Object>> lista;
 
-    String[] de = {"prestadores"};
-    int[] para = {R.id.prestadores};
+    String[] de = {"nome","email","telefone"};
+    int[] para = {R.id.tvNome,R.id.tvEmail,R.id.tvTelefone};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,7 @@ public class listaPrestador extends AppCompatActivity {
                     String data = new String(response,"UTF-8");
                     JSONObject res = new JSONObject(data);
                     JSONArray array = res.getJSONArray("prestador");
+
                     for(int i = 0; i < array.length(); i++){
                         Map<String, Object> mapa = new HashMap<>();
                         JSONObject json = array.getJSONObject(i);
@@ -63,23 +64,24 @@ public class listaPrestador extends AppCompatActivity {
                         tipo_servico = json.get("tipo_servico").toString();
                         preco_hora = json.get("preco_hora").toString();
                         biografia = json.get("biografia").toString();
-                        mapa.put("prestadores",id_prestador);
-                        mapa.put("prestadores",id_login);
-                        mapa.put("prestadores",nome);
-                        mapa.put("prestadores",dt_nasc);
-                        mapa.put("prestadores",email);
-                        mapa.put("prestadores",telefone);
-                        mapa.put("prestadores",cpf);
-                        mapa.put("prestadores",end_rua);
-                        mapa.put("prestadores",end_numero);
-                        mapa.put("prestadores",end_complemento);
-                        mapa.put("prestadores",end_bairro);
-                        mapa.put("prestadores",end_cidade);
-                        mapa.put("prestadores",end_estado);
-                        mapa.put("prestadores",end_cep);
-                        mapa.put("prestadores",tipo_servico);
-                        mapa.put("prestadores",preco_hora);
-                        mapa.put("prestadores",biografia);
+
+                        mapa.put("id_prestador",id_prestador);
+                        mapa.put("id_login",id_login);
+                        mapa.put("nome",nome);
+                        mapa.put("dt_nasc",dt_nasc);
+                        mapa.put("email",email);
+                        mapa.put("telefone",telefone);
+                        mapa.put("cpf",cpf);
+                        mapa.put("end_rua",end_rua);
+                        mapa.put("end_numero",end_numero);
+                        mapa.put("end_complemento",end_complemento);
+                        mapa.put("end_bairro",end_bairro);
+                        mapa.put("end_cidade",end_cidade);
+                        mapa.put("end_estado",end_estado);
+                        mapa.put("end_cep",end_cep);
+                        mapa.put("tipo_servico",tipo_servico);
+                        mapa.put("preco_hora",preco_hora);
+                        mapa.put("biografia",biografia);
                         lista.add(mapa);
 
                     }

@@ -1,5 +1,6 @@
 package com.example.juliano.trabalhogilson;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ public class ClienteOuPrestador extends AppCompatActivity {
 private RadioGroup radioGroup;
 EditText nome,nasc,email,fone,endereco,cpf,tpServico;
 TextView tv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,10 @@ TextView tv;
             }
         });
     }
+    public void novoLogado(View view){
+        Intent novo = new Intent(this, listaPrestador.class);
+        startActivity(novo);
+    }
 
     public void onClear(View v) {
         /* Clears all selected radio buttons to default */
@@ -74,13 +80,14 @@ TextView tv;
 
     }
 
-    public void salvar(View view){
+    public void salvar(final View view){
         String url = "http://ghelfer-001-site8.itempurl.com/criaCliente.php";
         RequestParams params = new RequestParams();
         params.add("nome",nome.getText().toString());
         params.add("dt_nasc",nasc.getText().toString());
         params.add("email",email.getText().toString());
         params.add("telefone",fone.getText().toString());
+
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(url, params, new AsyncHttpResponseHandler() {
@@ -89,9 +96,11 @@ TextView tv;
                 try {
                     String data = new String(response,"UTF-8");
 
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }
+                novoLogado(view);
             }
 
             @Override
