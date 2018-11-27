@@ -19,6 +19,7 @@ import cz.msebera.android.httpclient.Header;
 public class NovoCadastro extends AppCompatActivity {
 
     private EditText usuario,senha,repeteSenha;
+    public String ID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,11 @@ public class NovoCadastro extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                 try {
                     String data = new String(response,"UTF-8");
+
+                    JSONObject teste = new JSONObject(data);
+                    JSONObject json = teste.getJSONObject("login");
+                    ID = json.getString("id_login");
+                    Log.d("aqui",ID);
                     ClienteouPrestador();
                 }catch (Exception e){
                     e.printStackTrace();
@@ -49,13 +55,16 @@ public class NovoCadastro extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] response, Throwable error) {
-
+            Log.d("aqui",error.getMessage());
             }
         });
 
     }
     public void ClienteouPrestador(){
         Intent novo = new Intent(this, ClienteOuPrestador.class);
+        Bundle enviaDadosParaOutraActivity = new Bundle();
+        enviaDadosParaOutraActivity.putString("id_login",ID);
+        novo.putExtras(enviaDadosParaOutraActivity);
         startActivity(novo);
     }
 }
