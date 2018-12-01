@@ -15,12 +15,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nome: "/>
+            android:text="Nome: "
+            />
 
         <EditText
             android:id="@+id/etNome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="261dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:digits="abcdefghijklmnopqrstuvxwyz"/>
     </LinearLayout>
 
     <LinearLayout
@@ -30,12 +33,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Data de Nascimento: "/>
+            android:text="Data de Nascimento: "
+            />
 
         <EditText
             android:id="@+id/etNascimento"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="172dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
     </LinearLayout>
 
     <LinearLayout
@@ -49,7 +54,7 @@
 
         <EditText
             android:id="@+id/etEmail"
-            android:layout_width="wrap_content"
+            android:layout_width="264dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -64,8 +69,9 @@
 
         <EditText
             android:id="@+id/etTelefone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
     </LinearLayout>
 
     <LinearLayout
@@ -79,7 +85,7 @@
 
         <EditText
             android:id="@+id/etEndereco"
-            android:layout_width="wrap_content"
+            android:layout_width="239dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -94,8 +100,9 @@
 
         <EditText
             android:id="@+id/etCpf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="271dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
     </LinearLayout>
 <RadioGroup
     android:layout_width="fill_parent"
@@ -128,7 +135,7 @@
 
         <EditText
             android:id="@+id/etPrestador"
-            android:layout_width="wrap_content"
+            android:layout_width="195dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -144,8 +151,9 @@
 
         <EditText
             android:id="@+id/etPrecoHora"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="203dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
     </LinearLayout>
 
     <Button
