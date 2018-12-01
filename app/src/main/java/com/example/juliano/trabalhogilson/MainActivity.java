@@ -105,8 +105,15 @@ public class MainActivity extends AppCompatActivity {
 
                         if(id.equals(id_login)){
                             novoLogadoCliente(view);
+                            //Log.d("aki","novoLogadoCliente");
+                            //Log.d("aki","ID: " + id);
+                            //Log.d("aki","id_login: " + id_login);
+                            break;
                         }else{
                             novoLogadoPrestador(view);
+                            //Log.d("aki","novoLogadoPrestador");
+                            //Log.d("aki","ID: " + id);
+                            //Log.d("aki","id_login: " + id_login);
                         }
                     }
                 } catch (Exception e) {
