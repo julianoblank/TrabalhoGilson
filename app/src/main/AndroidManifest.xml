@@ -20,7 +20,11 @@
         </activity>
         <activity android:name=".NovoCadastro" />
         <activity android:name=".ClienteOuPrestador" />
-        <activity android:name=".listaPrestador"></activity>
+        <activity android:name=".listaPrestador" />
+        <activity
+            android:name=".listaCliente"
+            android:label="@string/title_activity_lista_cliente"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
