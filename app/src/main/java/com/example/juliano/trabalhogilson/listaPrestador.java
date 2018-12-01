@@ -23,8 +23,8 @@ public class listaPrestador extends AppCompatActivity {
     private ListView listView;
     List<Map<String, Object>> lista;
 
-    String[] de = {"nome","email","telefone"};
-    int[] para = {R.id.tvNome,R.id.tvEmail,R.id.tvTelefone};
+    String[] de = {"nome","email","telefone","tipo_servico","preco_hora"};
+    int[] para = {R.id.tvNome,R.id.tvEmail,R.id.tvTelefone,R.id.tvTipoServico,R.id.tvPrecoHora};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +67,9 @@ public class listaPrestador extends AppCompatActivity {
 
                         mapa.put("id_prestador",id_prestador);
                         mapa.put("id_login",id_login);
-                        mapa.put("nome",nome);
-                        mapa.put("dt_nasc",dt_nasc);
-                        mapa.put("email",email);
+                        mapa.put("nome","Nome: " + nome);
+                        mapa.put("dt_nasc","Data de Nascimento: " + dt_nasc);
+                        mapa.put("email","Email:" + email);
                         mapa.put("telefone",telefone);
                         mapa.put("cpf",cpf);
                         mapa.put("end_rua",end_rua);
@@ -79,8 +79,8 @@ public class listaPrestador extends AppCompatActivity {
                         mapa.put("end_cidade",end_cidade);
                         mapa.put("end_estado",end_estado);
                         mapa.put("end_cep",end_cep);
-                        mapa.put("tipo_servico",tipo_servico);
-                        mapa.put("preco_hora",preco_hora);
+                        mapa.put("tipo_servico","Tipo de Serviço:" + tipo_servico);
+                        mapa.put("preco_hora","Preço da hora: " + preco_hora);
                         mapa.put("biografia",biografia);
                         lista.add(mapa);
 
@@ -90,7 +90,7 @@ public class listaPrestador extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), lista, R.layout.line_item, de, para);
+                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), lista, R.layout.line_item_prestador, de, para);
                 listView.setAdapter(adapter);
             }
 

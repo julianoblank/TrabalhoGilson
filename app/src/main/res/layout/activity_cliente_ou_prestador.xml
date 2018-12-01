@@ -123,11 +123,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Prestador: "
+            android:text="Tipo do Serviço: "
             android:id="@+id/tvPrestador"/>
 
         <EditText
             android:id="@+id/etPrestador"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Preço da Hora: "
+            android:id="@+id/tvPrecoHora"/>
+
+        <EditText
+            android:id="@+id/etPrecoHora"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

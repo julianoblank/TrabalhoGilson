@@ -19,9 +19,11 @@ import cz.msebera.android.httpclient.Header;
 
 public class ClienteOuPrestador extends AppCompatActivity {
 private RadioGroup radioGroup;
-EditText nome,nasc,email,fone,endereco,cpf,tpServico;
-TextView tv;
+EditText nome,nasc,email,fone,endereco,cpf,tpServico,preco_hora;
+TextView tv,tv2;
 private String ID;
+private boolean flag = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,8 @@ private String ID;
         cpf = findViewById(R.id.etCpf);
         tpServico = findViewById(R.id.etPrestador);
         tv = findViewById(R.id.tvPrestador);
+        tv2 = findViewById(R.id.tvPrecoHora);
+        preco_hora = findViewById(R.id.etPrecoHora);
 
         Intent recebeDados = getIntent();
         Bundle recebendoDados = recebeDados.getExtras();
@@ -42,6 +46,8 @@ private String ID;
 
         tpServico.setVisibility(View.INVISIBLE);
         tv.setVisibility(View.INVISIBLE);
+        preco_hora.setVisibility(View.INVISIBLE);
+        tv2.setVisibility(View.INVISIBLE);
 
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         radioGroup.clearCheck();
@@ -53,14 +59,20 @@ private String ID;
                     switch(rb.getId()) {
                         case R.id.radio_prestador:
                             if (null != rb && checkedId > -1) {
+                                preco_hora.setVisibility(View.VISIBLE);
+                                tv2.setVisibility(View.VISIBLE);
                                 tpServico.setVisibility(View.VISIBLE);
                                 tv.setVisibility(View.VISIBLE);
+                                flag = true;
                                 break;
                             }
                         case R.id.radio_cliente:
                             if (null != rb && checkedId > -1) {
+                                preco_hora.setVisibility(View.INVISIBLE);
                                 tpServico.setVisibility(View.INVISIBLE);
                                 tv.setVisibility(View.INVISIBLE);
+                                tv2.setVisibility(View.INVISIBLE);
+                                flag = false;
                                 break;
                             }
 
@@ -71,8 +83,13 @@ private String ID;
             }
         });
     }
-    public void novoLogado(View view){
+    public void novoLogadoCliente(View view){
         Intent novo = new Intent(this, listaPrestador.class);
+        startActivity(novo);
+    }
+
+    public void novoLogadoPrestador(View view){
+        Intent novo = new Intent(this, listaCliente.class);
         startActivity(novo);
     }
 
@@ -87,35 +104,65 @@ private String ID;
     }
 
     public void salvar(final View view){
-        String url = "http://ghelfer-001-site8.itempurl.com/criaCliente.php";
-        RequestParams params = new RequestParams();
-        params.add("id_login",ID);
-        params.add("nome",nome.getText().toString());
-        params.add("dt_nasc",nasc.getText().toString());
-        params.add("email",email.getText().toString());
-        params.add("telefone",fone.getText().toString());
+        if(flag == false) {
+            String url = "http://ghelfer-001-site8.itempurl.com/criaCliente.php";
+            RequestParams params = new RequestParams();
+            params.add("id_login", ID);
+            params.add("nome", nome.getText().toString());
+            params.add("dt_nasc", nasc.getText().toString());
+            params.add("email", email.getText().toString());
+            params.add("telefone", fone.getText().toString());
 
 
-
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.post(url, params, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                try {
-                    String data = new String(response,"UTF-8");
-                    //Log.d("teste",data);
-                }catch (Exception e){
-                    e.printStackTrace();
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.post(url, params, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                    try {
+                        String data = new String(response, "UTF-8");
+                        //Log.d("teste",data);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    novoLogadoCliente(view);
                 }
-                novoLogado(view);
-            }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] response, Throwable error) {
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] response, Throwable error) {
 
-            }
-        });
+                }
+            });
+        }else if (flag == true){
+            String url = "http://ghelfer-001-site8.itempurl.com/criaPrestador.php";
+            RequestParams params = new RequestParams();
+            params.add("id_login", ID);
+            params.add("nome", nome.getText().toString());
+            params.add("dt_nasc", nasc.getText().toString());
+            params.add("email", email.getText().toString());
+            params.add("telefone", fone.getText().toString());
+            params.add("cpf", cpf.getText().toString());
+            params.add("tipo_servico", tpServico.getText().toString());
+            params.add("preco_hora", preco_hora.getText().toString());
 
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.post(url, params, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                    try {
+                        String data = new String(response, "UTF-8");
+                        //Log.d("teste",data);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    novoLogadoPrestador(view);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] response, Throwable error) {
+
+                }
+            });
+        }
     }
 
 

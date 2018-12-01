@@ -46,7 +46,6 @@ public class NovoCadastro extends AppCompatActivity {
                     JSONObject teste = new JSONObject(data);
                     JSONObject json = teste.getJSONObject("login");
                     ID = json.getString("id_login");
-                    Log.d("aqui",ID);
                     ClienteouPrestador();
                 }catch (Exception e){
                     e.printStackTrace();
@@ -55,7 +54,7 @@ public class NovoCadastro extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] response, Throwable error) {
-            Log.d("aqui",error.getMessage());
+
             }
         });
 
