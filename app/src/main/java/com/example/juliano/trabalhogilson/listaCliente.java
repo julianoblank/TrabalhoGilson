@@ -1,5 +1,6 @@
 package com.example.juliano.trabalhogilson;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -79,6 +80,11 @@ public class listaCliente extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void listarContratos(View view){
+        Intent novo = new Intent(this, listaContrato.class);
+        startActivity(novo);
     }
 
 }

@@ -6,7 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".listaCliente"
     android:orientation="vertical">
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lista Contratos"
+        android:onClick="listarContratos"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
