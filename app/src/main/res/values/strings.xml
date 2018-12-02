@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TrabalhoGilson</string>
     <string name="title_activity_lista_cliente">listaCliente</string>
+    <string name="title_activity_lista_contrato">listaContrato</string>
 </resources>

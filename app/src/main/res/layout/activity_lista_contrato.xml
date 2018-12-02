@@ -2,25 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".listaPrestador"
-    android:orientation="vertical">
-<Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Lista Contratos"
-    android:onClick="listarContratos"/>
-    
+    tools:context=".listaContrato"
+    android:orientation="vertical">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lista de Prestadores de Serviços:"/>
+        android:text="Lista de Contratos:"/>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lvPrestadores">
+        android:id="@+id/lvContratos">
 
     </ListView>
 
