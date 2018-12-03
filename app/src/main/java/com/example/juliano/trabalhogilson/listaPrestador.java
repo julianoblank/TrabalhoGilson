@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -24,6 +26,7 @@ public class listaPrestador extends AppCompatActivity {
     String id_prestador, id_login,nome,dt_nasc,email,telefone,cpf,end_rua,end_numero,end_complemento,end_bairro,end_cidade,end_estado,end_cep,tipo_servico,preco_hora,biografia;
     private ListView listView;
     List<Map<String, Object>> lista;
+    private EditText busca;
 
     String[] de = {"nome","email","telefone","tipo_servico","preco_hora"};
     int[] para = {R.id.tvNome,R.id.tvEmail,R.id.tvTelefone,R.id.tvTipoServico,R.id.tvPrecoHora};
@@ -35,18 +38,27 @@ public class listaPrestador extends AppCompatActivity {
 
         listView = findViewById(R.id.lvPrestadores);
         lista = new ArrayList<>();
+        busca = findViewById(R.id.edBusca);
 
+    }
+
+    public void listarContratos(View view){
+        Intent novo = new Intent(this, listaContrato.class);
+        startActivity(novo);
+    }
+
+    public void buscarServico(View view) {
         String url = "http://ghelfer-001-site8.itempurl.com/listaPrestador.php";
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                try{
-                    String data = new String(response,"UTF-8");
+                try {
+                    String data = new String(response, "UTF-8");
                     JSONObject res = new JSONObject(data);
                     JSONArray array = res.getJSONArray("prestador");
 
-                    for(int i = 0; i < array.length(); i++){
+                    for (int i = 0; i < array.length(); i++) {
                         Map<String, Object> mapa = new HashMap<>();
                         JSONObject json = array.getJSONObject(i);
                         id_prestador = json.get("id_prestador").toString();
@@ -64,31 +76,35 @@ public class listaPrestador extends AppCompatActivity {
                         end_estado = json.get("end_estado").toString();
                         end_cep = json.get("end_cep").toString();
                         tipo_servico = json.get("tipo_servico").toString();
-                        preco_hora = json.get("preco_hora").toString();
-                        biografia = json.get("biografia").toString();
+                        if (busca.getText().toString().equals(tipo_servico)) {
+                            mapa.put("id_prestador", id_prestador);
+                            mapa.put("id_login", id_login);
+                            mapa.put("nome", "Nome: " + nome);
+                            mapa.put("dt_nasc", "Data de Nascimento: " + dt_nasc);
+                            mapa.put("email", "Email:" + email);
+                            mapa.put("telefone", telefone);
+                            mapa.put("cpf", cpf);
+                            mapa.put("end_rua", end_rua);
+                            mapa.put("end_numero", end_numero);
+                            mapa.put("end_complemento", end_complemento);
+                            mapa.put("end_bairro", end_bairro);
+                            mapa.put("end_cidade", end_cidade);
+                            mapa.put("end_estado", end_estado);
+                            mapa.put("end_cep", end_cep);
+                            mapa.put("tipo_servico", "Tipo de Serviço:" + tipo_servico);
+                            mapa.put("preco_hora", "Preço da hora: " + preco_hora);
+                            mapa.put("biografia", biografia);
+                            preco_hora = json.get("preco_hora").toString();
+                            biografia = json.get("biografia").toString();
+                            lista.add(mapa);
+                            break;
+                        } else {
+                            Toast.makeText(listaPrestador.this, "Não possui prestador com esse tipo de serviço", Toast.LENGTH_SHORT).show();
 
-                        mapa.put("id_prestador",id_prestador);
-                        mapa.put("id_login",id_login);
-                        mapa.put("nome","Nome: " + nome);
-                        mapa.put("dt_nasc","Data de Nascimento: " + dt_nasc);
-                        mapa.put("email","Email:" + email);
-                        mapa.put("telefone",telefone);
-                        mapa.put("cpf",cpf);
-                        mapa.put("end_rua",end_rua);
-                        mapa.put("end_numero",end_numero);
-                        mapa.put("end_complemento",end_complemento);
-                        mapa.put("end_bairro",end_bairro);
-                        mapa.put("end_cidade",end_cidade);
-                        mapa.put("end_estado",end_estado);
-                        mapa.put("end_cep",end_cep);
-                        mapa.put("tipo_servico","Tipo de Serviço:" + tipo_servico);
-                        mapa.put("preco_hora","Preço da hora: " + preco_hora);
-                        mapa.put("biografia",biografia);
-                        lista.add(mapa);
-
+                        }
                     }
 
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -102,9 +118,8 @@ public class listaPrestador extends AppCompatActivity {
             }
         });
     }
-
-    public void listarContratos(View view){
-        Intent novo = new Intent(this, listaContrato.class);
-        startActivity(novo);
+    public void limpar(View view){
+        listView.setAdapter(null);
+        busca.setText("");
     }
 }
