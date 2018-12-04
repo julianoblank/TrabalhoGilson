@@ -22,7 +22,7 @@ import cz.msebera.android.httpclient.Header;
 public class MainActivity extends AppCompatActivity {
     private EditText usuario,senha;
     private String ID;
-    public String id;
+    public String id,id_cliente,pegaIdCliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,9 +102,14 @@ public class MainActivity extends AppCompatActivity {
                     for(int i = 0; i < array.length(); i++){
                         JSONObject json = array.getJSONObject(i);
                         id_login = json.get("id_login").toString();
+                        id_cliente = json.get("id_cliente").toString();
+
 
                         if(id.equals(id_login)){
-                            novoLogadoCliente(view);
+                            pegaIdCliente = id_cliente;
+                            EnviaIdCliente(view);
+
+                           // novoLogadoCliente(view);
                             //Log.d("aki","novoLogadoCliente");
                             //Log.d("aki","ID: " + id);
                             //Log.d("aki","id_login: " + id_login);
@@ -126,6 +131,15 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    public void EnviaIdCliente(View view){
+            Intent novo = new Intent(this, cliente.class);
+            Bundle enviaDadosParaOutraActivity = new Bundle();
+            enviaDadosParaOutraActivity.putString("id_cliente",pegaIdCliente);
+            novo.putExtras(enviaDadosParaOutraActivity);
+            startActivity(novo);
 
     }
 

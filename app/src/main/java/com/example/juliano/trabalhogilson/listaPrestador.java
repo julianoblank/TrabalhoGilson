@@ -42,11 +42,6 @@ public class listaPrestador extends AppCompatActivity {
 
     }
 
-    public void listarContratos(View view){
-        Intent novo = new Intent(this, listaContrato.class);
-        startActivity(novo);
-    }
-
     public void buscarServico(View view) {
         String url = "http://ghelfer-001-site8.itempurl.com/listaPrestador.php";
         AsyncHttpClient client = new AsyncHttpClient();
@@ -97,10 +92,6 @@ public class listaPrestador extends AppCompatActivity {
                             preco_hora = json.get("preco_hora").toString();
                             biografia = json.get("biografia").toString();
                             lista.add(mapa);
-                            break;
-                        } else {
-                            Toast.makeText(listaPrestador.this, "Não possui prestador com esse tipo de serviço", Toast.LENGTH_SHORT).show();
-
                         }
                     }
 

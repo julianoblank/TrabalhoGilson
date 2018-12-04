@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".listaPrestador"
     android:orientation="vertical">
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Lista Contratos"
-    android:onClick="listarContratos"/>
 
     <LinearLayout
         android:layout_width="wrap_content"

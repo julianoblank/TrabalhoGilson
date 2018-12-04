@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,13 +16,19 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import cz.msebera.android.httpclient.Header;
 
 public class ClienteOuPrestador extends AppCompatActivity {
 private RadioGroup radioGroup;
 EditText nome,nasc,email,fone,endereco,cpf,tpServico,preco_hora;
 TextView tv,tv2;
-private String ID;
+private String ID,id_cliente,id_login,pegaIdCliente;
 private boolean flag = false;
 
 
@@ -124,7 +131,8 @@ private boolean flag = false;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    novoLogadoCliente(view);
+                    //novoLogadoCliente(view);
+                    listarContratoClientes(view);
                 }
 
                 @Override
@@ -154,7 +162,7 @@ private boolean flag = false;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    novoLogadoPrestador(view);
+                    //novoLogadoPrestador(view);
                 }
 
                 @Override
@@ -164,6 +172,53 @@ private boolean flag = false;
             });
         }
     }
+
+    public void listarContratoClientes(final View view){
+        String url = "http://ghelfer-001-site8.itempurl.com/listaCliente.php";
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(url, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                try{
+                    String data = new String(response,"UTF-8");
+                    JSONObject res = new JSONObject(data);
+                    JSONArray array = res.getJSONArray("cliente");
+
+                    for(int i = 0; i < array.length(); i++){
+                        JSONObject json = array.getJSONObject(i);
+                        id_login = json.get("id_login").toString();
+                        id_cliente = json.get("id_cliente").toString();
+                        if(id_login.equals(ID)){
+                            pegaIdCliente = id_cliente;
+                            enviaClienteId(view);
+
+                        }
+
+
+                    }
+
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
+
+    public void enviaClienteId(View view){
+        Intent novo = new Intent(this, cliente.class);
+        Bundle enviaDadosParaOutraActivity = new Bundle();
+        enviaDadosParaOutraActivity.putString("id_cliente",pegaIdCliente);
+        novo.putExtras(enviaDadosParaOutraActivity);
+        startActivity(novo);
+    }
+
 
 
 }
