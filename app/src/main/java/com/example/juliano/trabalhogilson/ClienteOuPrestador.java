@@ -28,7 +28,7 @@ public class ClienteOuPrestador extends AppCompatActivity {
 private RadioGroup radioGroup;
 EditText nome,nasc,email,fone,endereco,cpf,tpServico,preco_hora;
 TextView tv,tv2;
-private String ID,id_cliente,id_login,pegaIdCliente;
+private String ID,id_cliente,id_login,pegaIdCliente,id_prestador,pegaIdPrestador;
 private boolean flag = false;
 
 
@@ -89,10 +89,6 @@ private boolean flag = false;
 
             }
         });
-    }
-    public void novoLogadoCliente(View view){
-        Intent novo = new Intent(this, listaPrestador.class);
-        startActivity(novo);
     }
 
     public void novoLogadoPrestador(View view){
@@ -163,6 +159,7 @@ private boolean flag = false;
                         e.printStackTrace();
                     }
                     //novoLogadoPrestador(view);
+                    listarContratoPrestador(view);
                 }
 
                 @Override
@@ -219,6 +216,50 @@ private boolean flag = false;
         startActivity(novo);
     }
 
+    public void listarContratoPrestador(final View view){
+        String url = "http://ghelfer-001-site8.itempurl.com/listaPrestador.php";
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(url, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                try{
+                    String data = new String(response,"UTF-8");
+                    JSONObject res = new JSONObject(data);
+                    JSONArray array = res.getJSONArray("prestador");
 
+                    for(int i = 0; i < array.length(); i++){
+                        JSONObject json = array.getJSONObject(i);
+                        id_login = json.get("id_login").toString();
+                        id_prestador = json.get("id_prestador").toString();
+                        if(id_login.equals(ID)){
+                            pegaIdPrestador = id_prestador;
+                            enviaPrestadorId(view);
+
+                        }
+
+
+                    }
+
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
+
+    public void enviaPrestadorId(View view){
+        Intent novo = new Intent(this, prestador.class);
+        Bundle enviaDadosParaOutraActivity = new Bundle();
+        enviaDadosParaOutraActivity.putString("id_prestador",pegaIdPrestador);
+        novo.putExtras(enviaDadosParaOutraActivity);
+        startActivity(novo);
+    }
 
 }

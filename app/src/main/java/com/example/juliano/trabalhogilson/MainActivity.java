@@ -22,7 +22,7 @@ import cz.msebera.android.httpclient.Header;
 public class MainActivity extends AppCompatActivity {
     private EditText usuario,senha;
     private String ID;
-    public String id,id_cliente,pegaIdCliente;
+    public String id,id_cliente,pegaIdCliente,id_prestador,pegaIdPrestador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void novoCadastro(View view){
         Intent novo = new Intent(this, NovoCadastro.class);
-        startActivity(novo);
-    }
-
-    public void novoLogadoCliente(View view){
-        Intent novo = new Intent(this, listaPrestador.class);
-        startActivity(novo);
-    }
-
-    public void novoLogadoPrestador(View view){
-        Intent novo = new Intent(this, listaCliente.class);
         startActivity(novo);
     }
 
@@ -109,16 +99,46 @@ public class MainActivity extends AppCompatActivity {
                             pegaIdCliente = id_cliente;
                             EnviaIdCliente(view);
 
-                           // novoLogadoCliente(view);
-                            //Log.d("aki","novoLogadoCliente");
-                            //Log.d("aki","ID: " + id);
-                            //Log.d("aki","id_login: " + id_login);
                             break;
                         }else{
-                            novoLogadoPrestador(view);
-                            //Log.d("aki","novoLogadoPrestador");
-                            //Log.d("aki","ID: " + id);
-                            //Log.d("aki","id_login: " + id_login);
+                            String url = "http://ghelfer-001-site8.itempurl.com/listaPrestador.php";
+                            AsyncHttpClient client = new AsyncHttpClient();
+                            client.get(url, new AsyncHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                                    try{
+                                        String id_login;
+                                        String data = new String(response,"UTF-8");
+                                        JSONObject res = new JSONObject(data);
+                                        JSONArray array = res.getJSONArray("prestador");
+
+                                        for(int i = 0; i < array.length(); i++){
+                                            JSONObject json = array.getJSONObject(i);
+                                            id_login = json.get("id_login").toString();
+                                            id_prestador = json.get("id_prestador").toString();
+
+
+                                            if(id.equals(id_login)){
+                                                pegaIdPrestador = id_prestador;
+                                                EnviaIdPrestador(view);
+
+                                                // novoLogadoCliente(view);
+                                                //Log.d("aki","novoLogadoCliente");
+                                                //Log.d("aki","ID: " + id);
+                                                //Log.d("aki","id_login: " + id_login);
+                                                break;
+                                            }
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                                }
+                            });
                         }
                     }
                 } catch (Exception e) {
@@ -143,4 +163,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void EnviaIdPrestador(View view){
+        Intent novo = new Intent(this, prestador.class);
+        Bundle enviaDadosParaOutraActivity = new Bundle();
+        enviaDadosParaOutraActivity.putString("id_prestador",pegaIdPrestador);
+        novo.putExtras(enviaDadosParaOutraActivity);
+        startActivity(novo);
+
+    }
 }

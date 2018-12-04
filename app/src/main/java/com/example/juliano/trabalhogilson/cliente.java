@@ -30,7 +30,7 @@ String id_cliente,ID,id_contrato;
     private ListView listView;
 
     String[] de = {"id_contrato"};
-    int[] para = {R.id.tvIdContrato2};
+    int[] para = {R.id.tvIdContrato};
 
 
     @Override
@@ -77,7 +77,7 @@ String id_cliente,ID,id_contrato;
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
-                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), lista, R.layout.line_item_cliente, de, para);
+                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), lista, R.layout.line_item_contratos, de, para);
                 listView.setAdapter(adapter);
 
             }
