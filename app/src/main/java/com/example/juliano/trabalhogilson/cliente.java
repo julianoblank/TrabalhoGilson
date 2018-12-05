@@ -91,7 +91,11 @@ String id_cliente,ID,id_contrato;
 
     public void listarServicos(View view){
         Intent novo = new Intent(this, listaPrestador.class);
+        Bundle enviaDadosParaOutraActivity = new Bundle();
+        enviaDadosParaOutraActivity.putString("id_cliente",ID);
+        novo.putExtras(enviaDadosParaOutraActivity);
         startActivity(novo);
     }
+
 
 }

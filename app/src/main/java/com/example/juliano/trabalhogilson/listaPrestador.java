@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,6 +29,7 @@ public class listaPrestador extends AppCompatActivity {
     private ListView listView;
     List<Map<String, Object>> lista;
     private EditText busca;
+    String pegaIdPrestador,pegaIdCliente,longitude,latitude;
 
     String[] de = {"nome","email","telefone","tipo_servico","preco_hora"};
     int[] para = {R.id.tvNome,R.id.tvEmail,R.id.tvTelefone,R.id.tvTipoServico,R.id.tvPrecoHora};
@@ -39,6 +42,20 @@ public class listaPrestador extends AppCompatActivity {
         listView = findViewById(R.id.lvPrestadores);
         lista = new ArrayList<>();
         busca = findViewById(R.id.edBusca);
+
+        Intent recebeDados = getIntent();
+        Bundle recebendoDados = recebeDados.getExtras();
+        pegaIdCliente = recebendoDados.getString("id_cliente");
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Map<String,Object> mapa = lista.get(position);
+                String item = mapa.get("id_prestador").toString();
+                Toast.makeText(getApplicationContext(), item, Toast.LENGTH_SHORT).show();
+                pegaIdPrestador = item;
+            }
+        });
 
     }
 
@@ -112,5 +129,41 @@ public class listaPrestador extends AppCompatActivity {
     public void limpar(View view){
         listView.setAdapter(null);
         busca.setText("");
+    }
+
+    public void criaContrato(final View view){
+        String url = "http://ghelfer-001-site8.itempurl.com/criaContrato.php";
+        RequestParams params = new RequestParams();
+        params.add("id_cliente",pegaIdCliente);
+        params.add("id_prestador",pegaIdPrestador);
+        params.add("dt_inicio","1");
+        params.add("local","santa cruz do sul");
+        params.add("latitude","0980890");
+        params.add("longitude","1089089");
+        Toast.makeText(listaPrestador.this, "ID Cliente: " + pegaIdCliente, Toast.LENGTH_SHORT).show();
+        Toast.makeText(listaPrestador.this, "ID Prestador: " + pegaIdPrestador, Toast.LENGTH_SHORT).show();
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(url, params, new AsyncHttpResponseHandler() {
+            @Override
+
+            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                try {
+                    String data = new String(response,"UTF-8");
+                    JSONObject teste = new JSONObject(data);
+                    String validar = teste.getString("success");
+                    if(validar != "false") {
+                        Toast.makeText(listaPrestador.this, "deu", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(listaPrestador.this, "nao deu", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] response, Throwable error) {
+                Toast.makeText(listaPrestador.this, "falhou", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
