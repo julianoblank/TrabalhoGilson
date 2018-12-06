@@ -1,6 +1,13 @@
 package com.example.juliano.trabalhogilson;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +24,9 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +39,10 @@ public class listaPrestador extends AppCompatActivity {
     List<Map<String, Object>> lista;
     private EditText busca;
     String pegaIdPrestador,pegaIdCliente,longitude,latitude;
-
+    LocationManager loc;
+    SimpleDateFormat formataData = new SimpleDateFormat("dd-MM-yyyy");
+    Date data = new Date();
+    String dataFormatada = formataData.format(data);
     String[] de = {"nome","email","telefone","tipo_servico","preco_hora"};
     int[] para = {R.id.tvNome,R.id.tvEmail,R.id.tvTelefone,R.id.tvTipoServico,R.id.tvPrecoHora};
 
@@ -47,12 +59,32 @@ public class listaPrestador extends AppCompatActivity {
         Bundle recebendoDados = recebeDados.getExtras();
         pegaIdCliente = recebendoDados.getString("id_cliente");
 
+        loc = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Listening listener = new Listening();
+
+        long time = 0;
+        float dist = 0;
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        //loc.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, time, dist, listener);
+        loc.requestLocationUpdates(LocationManager.GPS_PROVIDER,time, dist, listener);
+        loc.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, time, dist, listener);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Map<String,Object> mapa = lista.get(position);
                 String item = mapa.get("id_prestador").toString();
-                Toast.makeText(getApplicationContext(), item, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), item, Toast.LENGTH_SHORT).show();
                 pegaIdPrestador = item;
             }
         });
@@ -136,12 +168,12 @@ public class listaPrestador extends AppCompatActivity {
         RequestParams params = new RequestParams();
         params.add("id_cliente",pegaIdCliente);
         params.add("id_prestador",pegaIdPrestador);
-        params.add("dt_inicio","1");
+        params.add("dt_inicio",dataFormatada);
         params.add("local","santa cruz do sul");
-        params.add("latitude","0980890");
-        params.add("longitude","1089089");
-        Toast.makeText(listaPrestador.this, "ID Cliente: " + pegaIdCliente, Toast.LENGTH_SHORT).show();
-        Toast.makeText(listaPrestador.this, "ID Prestador: " + pegaIdPrestador, Toast.LENGTH_SHORT).show();
+        params.add("latitude",latitude);
+        params.add("longitude",longitude);
+        //Toast.makeText(listaPrestador.this, "ID Cliente: " + pegaIdCliente, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(listaPrestador.this, "ID Prestador: " + pegaIdPrestador, Toast.LENGTH_SHORT).show();
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(url, params, new AsyncHttpResponseHandler() {
             @Override
@@ -152,10 +184,10 @@ public class listaPrestador extends AppCompatActivity {
                     JSONObject teste = new JSONObject(data);
                     String validar = teste.getString("success");
                     if(validar != "false") {
-                        Toast.makeText(listaPrestador.this, "deu", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(listaPrestador.this, "Contrato Criado com Sucesso", Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
-                    Toast.makeText(listaPrestador.this, "nao deu", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(listaPrestador.this, "nao deu", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
@@ -166,4 +198,31 @@ public class listaPrestador extends AppCompatActivity {
             }
         });
     }
+
+    public class Listening implements LocationListener {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            latitude = String.valueOf(location.getLatitude());
+            longitude = String.valueOf(location.getLongitude());
+
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    }
+
+
 }

@@ -2,30 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".cliente"
-    android:orientation="horizontal">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".cliente">
 
-    <Button
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Serviços"
-        android:onClick="listarServicos"/>
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Meus Contratos"
-        android:onClick="meusContratos"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="listarServicos"
+            android:text="Serviços" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="meusContratos"
+            android:text="Meus Contratos" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sair"
+            android:onClick="sair"/>
+
+    </LinearLayout>
 
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/lvSEILA">
 
-    </ListView>
-
+<ListView
+android:id="@+id/lvContrato"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content">
+</ListView>
 
 </LinearLayout>

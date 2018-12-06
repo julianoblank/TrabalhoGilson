@@ -16,6 +16,17 @@
             android:ellipsize="marquee"
             android:textColor="@color/colorPrimary"/>
 
+    <TextView
+        android:id="@+id/tvDataInicio"
+        android:layout_width="match_parent"
+        android:textStyle="bold"
+        android:text="dt_inicio"
+        android:textAppearance="?android:attr/textAppearanceLargePopupMenu"
+        android:singleLine="true"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:ellipsize="marquee"
+        android:textColor="@color/colorPrimary"/>
+
         <TextView
             android:id="@+id/tvLocal"
             android:layout_width="match_parent"
@@ -26,6 +37,28 @@
             android:layout_height="?android:attr/listPreferredItemHeight"
             android:ellipsize="marquee"
             android:textColor="@color/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/tvLatitude"
+        android:layout_width="match_parent"
+        android:textStyle="bold"
+        android:text="Latitude"
+        android:textAppearance="?android:attr/textAppearanceLargePopupMenu"
+        android:singleLine="true"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:ellipsize="marquee"
+        android:textColor="@color/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/tvLongitude"
+        android:layout_width="match_parent"
+        android:textStyle="bold"
+        android:text="Longitude"
+        android:textAppearance="?android:attr/textAppearanceLargePopupMenu"
+        android:singleLine="true"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:ellipsize="marquee"
+        android:textColor="@color/colorPrimary"/>
 
     <TextView
         android:id="@+id/tvDuracao"

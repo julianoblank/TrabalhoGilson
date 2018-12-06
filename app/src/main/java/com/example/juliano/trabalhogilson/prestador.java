@@ -23,13 +23,13 @@ import cz.msebera.android.httpclient.Header;
 
 public class prestador extends AppCompatActivity {
 
-    String id_prestador,ID,id_contrato;
+    String id_prestador,ID,id_contrato,dt_inicio,local,latitude,longitude,duracao,preco,avaliacao;;
 
     List<Map<String, Object>> lista;
     private ListView listView;
 
-    String[] de = {"id_contrato"};
-    int[] para = {R.id.tvIdContrato};
+    String[] de = {"id_contrato","dt_inicio","local","latitude","longitude","duracao","preco","avaliacao"};
+    int[] para = {R.id.tvIdContrato,R.id.tvDataInicio,R.id.tvLocal,R.id.tvLatitude,R.id.tvLongitude,R.id.tvDuracao,R.id.tvPreco,R.id.tvAvaliacao};
 
 
     @Override
@@ -62,12 +62,23 @@ public class prestador extends AppCompatActivity {
                         JSONObject json = array.getJSONObject(i);
                         id_prestador = json.get("id_prestador").toString();
                         id_contrato = json.get("id_contrato").toString();
+                        dt_inicio = json.get("dt_inicio").toString();
+                        local = json.get("local").toString();
+                        latitude = json.get("latitude").toString();
+                        longitude = json.get("longitude").toString();
+                        duracao = json.get("duracao").toString();
+                        preco = json.get("preco").toString();
+                        avaliacao = json.get("avaliacao").toString();
                         if(ID.equals(id_prestador)){
                             mapa.put("id_contrato", "Id do Contrato: " + id_contrato);
+                            mapa.put("dt_inicio", "Data de inicio: " + dt_inicio);
+                            mapa.put("local", "Local: " + local);
+                            mapa.put("latitude", "Latitude: " + latitude);
+                            mapa.put("longitude", "Longitude: " + longitude);
+                            mapa.put("duracao", "Duração: " + duracao);
+                            mapa.put("preco", "Preco: " + preco);
+                            mapa.put("avaliacao", "Avalição: " + avaliacao);
                             lista.add(mapa);
-                        }else{
-                            Toast.makeText(prestador.this, "Não tem Contrato", Toast.LENGTH_SHORT).show();
-                            break;
                         }
 
 
@@ -91,6 +102,12 @@ public class prestador extends AppCompatActivity {
     public void listarServicos(View view){
         Intent novo = new Intent(this, listaPrestador.class);
         startActivity(novo);
+    }
+
+    public void sair(View view){
+        Intent novo = new Intent(this, MainActivity.class);
+        startActivity(novo);
+
     }
 
 }

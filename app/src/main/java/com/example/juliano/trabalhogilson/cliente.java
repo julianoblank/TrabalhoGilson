@@ -25,12 +25,12 @@ import java.util.Map;
 import cz.msebera.android.httpclient.Header;
 
 public class cliente extends AppCompatActivity {
-String id_cliente,ID,id_contrato;
+String id_cliente,ID,id_contrato,dt_inicio,local,latitude,longitude,duracao,preco,avaliacao;
     List<Map<String, Object>> lista;
     private ListView listView;
 
-    String[] de = {"id_contrato"};
-    int[] para = {R.id.tvIdContrato};
+    String[] de = {"id_contrato","dt_inicio","local","latitude","longitude","duracao","preco","avaliacao"};
+    int[] para = {R.id.tvIdContrato,R.id.tvDataInicio,R.id.tvLocal,R.id.tvLatitude,R.id.tvLongitude,R.id.tvDuracao,R.id.tvPreco,R.id.tvAvaliacao};
 
 
     @Override
@@ -41,7 +41,7 @@ String id_cliente,ID,id_contrato;
         Intent recebeDados = getIntent();
         Bundle recebendoDados = recebeDados.getExtras();
         ID = recebendoDados.getString("id_cliente");
-        listView = findViewById(R.id.lvSEILA);
+        listView = findViewById(R.id.lvContrato);
         lista = new ArrayList<>();
 
 
@@ -63,12 +63,23 @@ String id_cliente,ID,id_contrato;
                         JSONObject json = array.getJSONObject(i);
                         id_cliente = json.get("id_cliente").toString();
                         id_contrato = json.get("id_contrato").toString();
+                        dt_inicio = json.get("dt_inicio").toString();
+                        local = json.get("local").toString();
+                        latitude = json.get("latitude").toString();
+                        longitude = json.get("longitude").toString();
+                        duracao = json.get("duracao").toString();
+                        preco = json.get("preco").toString();
+                        avaliacao = json.get("avaliacao").toString();
                         if(ID.equals(id_cliente)){
                             mapa.put("id_contrato", "Id do Contrato: " + id_contrato);
+                            mapa.put("dt_inicio", "Data de inicio: " + dt_inicio);
+                            mapa.put("local", "Local: " + local);
+                            mapa.put("latitude", "Latitude: " + latitude);
+                            mapa.put("longitude", "Longitude: " + longitude);
+                            mapa.put("duracao", "Duração: " + duracao);
+                            mapa.put("preco", "Preco: " + preco);
+                            mapa.put("avaliacao", "Avalição: " + avaliacao);
                             lista.add(mapa);
-                        }else{
-                            Toast.makeText(cliente.this, "Não tem Contrato", Toast.LENGTH_SHORT).show();
-                            break;
                         }
 
 
@@ -95,6 +106,12 @@ String id_cliente,ID,id_contrato;
         enviaDadosParaOutraActivity.putString("id_cliente",ID);
         novo.putExtras(enviaDadosParaOutraActivity);
         startActivity(novo);
+    }
+
+    public void sair(View view){
+        Intent novo = new Intent(this, MainActivity.class);
+        startActivity(novo);
+
     }
 
 
