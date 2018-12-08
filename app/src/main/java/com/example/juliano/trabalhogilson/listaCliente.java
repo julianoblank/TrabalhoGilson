@@ -40,7 +40,7 @@ public class listaCliente extends AppCompatActivity {
         listView = findViewById(R.id.lvClientes);
         lista = new ArrayList<>();
 
-        String url = "http://ghelfer-001-site8.itempurl.com/listaCliente.php";
+        String url = "http://www.trabalhopdm.top/listaCliente.php";
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new AsyncHttpResponseHandler() {
             @Override

@@ -48,7 +48,7 @@ String id_cliente,ID,id_contrato,dt_inicio,local,latitude,longitude,duracao,prec
     }
 
     public void meusContratos(View view){
-        String url = "http://ghelfer-001-site8.itempurl.com/listaContrato.php";
+        String url = "http://www.trabalhopdm.top/listaContrato.php";
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new AsyncHttpResponseHandler() {
             @Override

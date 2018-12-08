@@ -39,7 +39,7 @@ public class listaContrato extends AppCompatActivity {
         listView = findViewById(R.id.lvContratos);
         lista = new ArrayList<>();
 
-        String url = "http://ghelfer-001-site8.itempurl.com/listaContrato.php";
+        String url = "http://www.trabalhopdm.top/listaContrato.php";
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new AsyncHttpResponseHandler() {
             @Override

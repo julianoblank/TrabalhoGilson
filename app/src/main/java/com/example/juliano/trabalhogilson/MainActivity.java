@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void validaLogin(final View view){
-        String url = "http://ghelfer-001-site8.itempurl.com/validaLogin.php";
+        String url = "http://www.trabalhopdm.top/validaLogin.php";
         RequestParams params = new RequestParams();
         params.add("email",usuario.getText().toString());
         params.add("senha",senha.getText().toString());
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void verificaLogin(final  View view,String ID){
-        String url = "http://ghelfer-001-site8.itempurl.com/listaCliente.php";
+        String url = "http://www.trabalhopdm.top/listaCliente.php";
         AsyncHttpClient client = new AsyncHttpClient();
         id = ID;
         client.get(url, new AsyncHttpResponseHandler() {
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
                             break;
                         }else{
-                            String url = "http://ghelfer-001-site8.itempurl.com/listaPrestador.php";
+                            String url = "http://www.trabalhopdm.top/listaPrestador.php";
                             AsyncHttpClient client = new AsyncHttpClient();
                             client.get(url, new AsyncHttpResponseHandler() {
                                 @Override

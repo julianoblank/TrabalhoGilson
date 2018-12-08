@@ -92,7 +92,7 @@ public class listaPrestador extends AppCompatActivity {
     }
 
     public void buscarServico(View view) {
-        String url = "http://ghelfer-001-site8.itempurl.com/listaPrestador.php";
+        String url = "http://www.trabalhopdm.top/listaPrestador.php";
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
@@ -164,7 +164,7 @@ public class listaPrestador extends AppCompatActivity {
     }
 
     public void criaContrato(final View view){
-        String url = "http://ghelfer-001-site8.itempurl.com/criaContrato.php";
+        String url = "http://www.trabalhopdm.top/criaContrato.php";
         RequestParams params = new RequestParams();
         params.add("id_cliente",pegaIdCliente);
         params.add("id_prestador",pegaIdPrestador);

@@ -43,7 +43,7 @@ public class NovoCadastro extends AppCompatActivity {
 
         }
         else {
-            String url = "http://ghelfer-001-site8.itempurl.com/criaLogin.php";
+            String url = "http://www.trabalhopdm.top/criaLogin.php";
             RequestParams params = new RequestParams();
             params.add("email", usuario.getText().toString());
             params.add("senha", senha.getText().toString());

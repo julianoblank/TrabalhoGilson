@@ -108,7 +108,7 @@ private boolean flag = false;
 
     public void salvar(final View view){
         if(flag == false) {
-            String url = "http://ghelfer-001-site8.itempurl.com/criaCliente.php";
+            String url = "http://www.trabalhopdm.top/criaCliente.php";
             RequestParams params = new RequestParams();
             params.add("id_login", ID);
             params.add("nome", nome.getText().toString());
@@ -137,7 +137,7 @@ private boolean flag = false;
                 }
             });
         }else if (flag == true){
-            String url = "http://ghelfer-001-site8.itempurl.com/criaPrestador.php";
+            String url = "http://www.trabalhopdm.top/criaPrestador.php";
             RequestParams params = new RequestParams();
             params.add("id_login", ID);
             params.add("nome", nome.getText().toString());
@@ -171,7 +171,7 @@ private boolean flag = false;
     }
 
     public void listarContratoClientes(final View view){
-        String url = "http://ghelfer-001-site8.itempurl.com/listaCliente.php";
+        String url = "http://www.trabalhopdm.top/listaCliente.php";
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
@@ -217,7 +217,7 @@ private boolean flag = false;
     }
 
     public void listarContratoPrestador(final View view){
-        String url = "http://ghelfer-001-site8.itempurl.com/listaPrestador.php";
+        String url = "http://www.trabalhopdm.top/listaPrestador.php";
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
